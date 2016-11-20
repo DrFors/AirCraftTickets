@@ -33,8 +33,8 @@
 
     <Button
         android:layout_weight="5"
+        android:id="@+id/search_go_btn"
         android:text="GO!"
-        android:onClick="search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

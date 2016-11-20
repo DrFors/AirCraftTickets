@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     String origin = "YUL", destination = "YMX";
     CustomAdapter customAdapter;
     JSONParser jsonParser;
+    Button btn;
 
 
     @Override
@@ -30,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initSpinners();
         initListView();
+        btn = (Button) findViewById(R.id.search_go_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GetDataTask getDataTask = new GetDataTask();
+                getDataTask.execute();
+            }
+        });
 
 
     }
@@ -166,10 +176,6 @@ public class MainActivity extends AppCompatActivity {
         listOfTickets = (ListView) findViewById(R.id.list_view);
     }
 
-    public void search(View view) {
-        GetDataTask getDataTask = new GetDataTask();
-        getDataTask.execute();
-    }
 
 
     class GetDataTask extends AsyncTask<Void, Void, JSONObject> {
