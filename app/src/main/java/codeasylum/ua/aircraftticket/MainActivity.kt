@@ -20,15 +20,15 @@ import codeasylum.ua.aircraftticket.Adapters.CustomAdapter
 class MainActivity : AppCompatActivity() {
 
 
-    internal var animation: AnimationDrawable
-    internal var listOfTickets: ListView
-    internal var spinnerStart: Spinner
-    internal var spinnerEnd: Spinner
+    internal var animation: AnimationDrawable? = null
+    internal var listOfTickets: ListView? = null
+    internal var spinnerStart: Spinner? = null
+    internal var spinnerEnd: Spinner? = null
     internal var origin = "1"
     internal var destination = "1"
-    internal var customAdapter: CustomAdapter
-    internal var jsonParser: JSONParser
-    internal var btn: ImageButton
+    internal var customAdapter: CustomAdapter? = null
+    internal var jsonParser: JSONParser? = null
+    internal var btn: ImageButton? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         initSpinners()
         initListView()
         btn = findViewById(R.id.animation_btn) as ImageButton
-        btn.setBackgroundResource(R.drawable.anim_btn)
-        animation = btn.background as AnimationDrawable
-        btn.setOnClickListener {
-            animation.start()
+        btn!!.setBackgroundResource(R.drawable.anim_btn)
+        animation = btn!!.background as AnimationDrawable
+        btn!!.setOnClickListener {
+            animation!!.start()
             val getDataTask = GetDataTask()
             getDataTask.execute()
         }
@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerEnd = findViewById(R.id.end_airport) as Spinner
-        spinnerEnd.adapter = adapter
-        spinnerEnd.setSelection(1)
-        spinnerEnd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerEnd!!.adapter = adapter
+        spinnerEnd!!.setSelection(1)
+        spinnerEnd!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 when (i) {
                     0 -> destination = "YUL"
@@ -81,9 +81,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         spinnerStart = findViewById(R.id.start_airport) as Spinner
-        spinnerStart.setSelection(1)
-        spinnerStart.adapter = adapter
-        spinnerStart.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerStart!!.setSelection(1)
+        spinnerStart!!.adapter = adapter
+        spinnerStart!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 when (i) {
                     0 -> origin = "YUL"
@@ -134,14 +134,14 @@ class MainActivity : AppCompatActivity() {
         override fun onPostExecute(jsonObject: JSONObject) {
             jsonParser = JSONParser(jsonObject)
             try {
-                customAdapter = CustomAdapter(applicationContext, jsonParser.ticketArayList)
+                customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
 
-            listOfTickets.adapter = customAdapter
-            animation.stop()
-            btn.setBackgroundResource(R.drawable.anim_btn)
+            listOfTickets?.adapter = customAdapter
+            animation?.stop()
+            btn?.setBackgroundResource(R.drawable.anim_btn)
 
 
         }

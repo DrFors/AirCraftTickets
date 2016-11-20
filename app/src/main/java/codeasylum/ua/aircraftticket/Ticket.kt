@@ -9,8 +9,7 @@ class Ticket internal constructor(val startTime: String, val endTime: String, va
 
     override fun toString(): String {
 
-        return "StartTime " + startTime + "\n"
-        +"EndTime " + endTime + "\n" +
+        return "StartTime " + startTime + "\n"+"EndTime " + endTime + "\n" +
                 "Price " + price + "\n" +
                 "Transfers" + numberOfTransfers + "\n" +
                 "Duration " + duration

@@ -109,21 +109,17 @@ internal class Request(private val origin: String, private val destination: Stri
             Log.d(TAG, "Post parameters : " + jsonString)
             Log.d(TAG, "Response Code : " + responseCode)
 
-            val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
-            var inputLine: String
-            val response = StringBuilder()
-
-            while ((inputLine = bufferedReader.readLine()) != null) {
-                response.append(inputLine)
-            }
-            bufferedReader.close()
+            val inputLine = connection.inputStream.bufferedReader().readText()
 
 
-            Log.d(TAG, "Response string: " + response.toString())
+
+
+
+            Log.d(TAG, "Response string: " + inputLine)
             Log.d(TAG, "-----------end http request-----------\n")
             Log.d(TAG, "  ")
 
-            return response.toString()
+            return inputLine
         }
 
 
