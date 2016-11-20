@@ -25,16 +25,29 @@
         />
 
 </TableRow>
-    <ListView
+    <FrameLayout
         android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <Button
-        android:layout_weight="5"
-        android:id="@+id/search_go_btn"
-        android:text="GO!"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <ImageButton
+            android:contentDescription=""
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:layout_gravity="end|bottom"
+            android:id="@+id/animation_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="29dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/anim_btn" />
+    </FrameLayout>
+
+
 </LinearLayout>

@@ -59,10 +59,10 @@ public class CustomAdapter extends ArrayAdapter<Ticket> {
         }
 
 
-        viewHolder.departureDate.setText(tickets.get(i).getStartTime());
-        viewHolder.arrivalDate.setText(tickets.get(i).getEndTime());
-        viewHolder.price.setText(tickets.get(i).getPrice());
-        viewHolder.countOfTransfers.setText(tickets.get(i).getNumberOfTransfers()+"");
+        viewHolder.departureDate.setText("Departure Date: " + tickets.get(i).getStartTime());
+        viewHolder.arrivalDate.setText("Arrival Date: " + tickets.get(i).getEndTime());
+        viewHolder.price.setText("Price: " + tickets.get(i).getPrice());
+        viewHolder.countOfTransfers.setText("Transfers: " + tickets.get(i).getNumberOfTransfers());
 
 
 

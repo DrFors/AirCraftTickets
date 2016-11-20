@@ -1,5 +1,6 @@
 package codeasylum.ua.aircraftticket;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -18,12 +20,13 @@ import codeasylum.ua.aircraftticket.Adapters.CustomAdapter;
 public class MainActivity extends AppCompatActivity {
 
 
+    AnimationDrawable animation;
     ListView listOfTickets;
     Spinner spinnerStart, spinnerEnd;
-    String origin = "YUL", destination = "YMX";
+    String origin = "1", destination = "1";
     CustomAdapter customAdapter;
     JSONParser jsonParser;
-    Button btn;
+    ImageButton btn;
 
 
     @Override
@@ -32,14 +35,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initSpinners();
         initListView();
-        btn = (Button) findViewById(R.id.search_go_btn);
+        btn = (ImageButton) findViewById(R.id.animation_btn);
+        btn.setBackgroundResource(R.drawable.anim_btn);
+        animation = (AnimationDrawable) btn.getBackground();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                animation.start();
                 GetDataTask getDataTask = new GetDataTask();
                 getDataTask.execute();
             }
         });
+
 
 
     }
@@ -201,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             listOfTickets.setAdapter(customAdapter);
+            animation.stop();
+            btn.setBackgroundResource(R.drawable.anim_btn);
 
 
         }

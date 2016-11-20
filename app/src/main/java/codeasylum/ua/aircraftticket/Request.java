@@ -20,7 +20,8 @@ import java.util.Calendar;
 
 class Request {
 
-    private static final String key = "?key=AIzaSyCdKk4nUqMm8d1ZVwzwWqOfAf_fKkZAY28";
+    private static final String key = "?key=AIzaSyA-EJ2toj9z8tv8HYbNRNqWPvB27akvFss";
+    //private static final String key = "?key=AIzaSyCdKk4nUqMm8d1ZVwzwWqOfAf_fKkZAY28";
     private static final String BASE_URL = "https://www.googleapis.com/qpxExpress/v1/trips/search";
     private String origin;
     private String destination;
@@ -68,6 +69,7 @@ class Request {
         JSONObject pasanger = new JSONObject();
         //addpasanger
         pasanger.put("adultCount", 1);
+        //createslince
         JSONArray slince = new JSONArray();
         JSONObject buff = new JSONObject();
         buff.put("origin", origin);
@@ -78,7 +80,7 @@ class Request {
         request.put("passengers", pasanger);
         request.put("slice", slince);
         request.put("refundable", false);
-        request.put("solutions", "5");
+        request.put("solutions", "20");
         root.put("request", request);
 
 
@@ -91,11 +93,10 @@ class Request {
         URL obj = createURL();
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
 
-        //add reuqest header
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Content-Length", "" + jsonString.getBytes().length);
 
-        //Send  request
+
         connection.setDoOutput(true);
         DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
         outputStream.writeBytes(jsonString);
@@ -118,7 +119,7 @@ class Request {
         }
         bufferedReader.close();
 
-//      print result
+
         Log.d(TAG, "Response string: " + response.toString());
         Log.d(TAG, "-----------end http request-----------\n");
         Log.d(TAG, "  ");
