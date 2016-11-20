@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="code_of_airporst">
+        <item>YUL</item>
+        <item>YMX</item>
+        <item>YOW</item>
+        <item>MEX</item>
+        <item>MDW</item>
+        <item>MIA</item>
+        <item>JFK</item>
+        <item>DCA</item>
+        <item>EZE</item>
+        <item>AEP</item>
+        <item>HND</item>
+        <item>BHY</item>
+        <item>DWC</item>
+        <item>CDG</item>
+        <item>AMS</item>
+    </string-array>
+</resources>
