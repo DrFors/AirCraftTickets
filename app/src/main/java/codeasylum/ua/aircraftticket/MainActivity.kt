@@ -5,17 +5,13 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ListView
-import android.widget.Spinner
+import android.widget.*
 
 import org.json.JSONException
 import org.json.JSONObject
 
 import codeasylum.ua.aircraftticket.Adapters.CustomAdapter
+import codeasylum.ua.aircraftticket.Requests.Request
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,20 +25,28 @@ class MainActivity : AppCompatActivity() {
     internal var customAdapter: CustomAdapter? = null
     internal var jsonParser: JSONParser? = null
     internal var btn: ImageButton? = null
+    internal var help_text_view: TextView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         initSpinners()
         initListView()
+
+        help_text_view = findViewById(R.id.help_text_view) as TextView?
         btn = findViewById(R.id.animation_btn) as ImageButton
         btn!!.setBackgroundResource(R.drawable.anim_btn)
         animation = btn!!.background as AnimationDrawable
+
         btn!!.setOnClickListener {
+            if(origin == "1" || destination == "1" || origin == destination)
+                help_text_view?.text = getString(R.string.need_select_points)
+            else{
             animation!!.start()
             val getDataTask = GetDataTask()
-            getDataTask.execute()
+            getDataTask.execute()}
         }
 
 
@@ -127,16 +131,17 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
             return null
         }
 
         override fun onPostExecute(jsonObject: JSONObject) {
+            help_text_view?.visibility = View.INVISIBLE
             jsonParser = JSONParser(jsonObject)
             try {
                 customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
             } catch (e: JSONException) {
-                e.printStackTrace()
+                help_text_view?.visibility = View.VISIBLE
+                help_text_view?.text = getString(R.string.no_aircraft)
             }
 
             listOfTickets?.adapter = customAdapter

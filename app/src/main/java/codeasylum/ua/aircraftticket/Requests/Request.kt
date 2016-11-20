@@ -1,4 +1,4 @@
-package codeasylum.ua.aircraftticket
+package codeasylum.ua.aircraftticket.Requests
 
 import android.util.Log
 
@@ -12,6 +12,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import java.nio.charset.Charset
 import java.util.Calendar
 
 /**
@@ -95,12 +96,15 @@ internal class Request(private val origin: String, private val destination: Stri
             connection.setRequestProperty("Content-Type", "application/json")
             connection.setRequestProperty("Content-Length", "" + jsonString.toByteArray().size)
 
-
             connection.doOutput = true
-            val outputStream = DataOutputStream(connection.outputStream)
+            connection.outputStream.write(jsonString.toByteArray())
+            /*val outputStream = DataOutputStream(connection.outputStream)
             outputStream.writeBytes(jsonString)
             outputStream.flush()
-            outputStream.close()
+            outputStream.close() */
+
+
+
 
             val responseCode = connection.responseCode
             val TAG = "TTTTTTTTTTTT"
@@ -119,6 +123,7 @@ internal class Request(private val origin: String, private val destination: Stri
             Log.d(TAG, "-----------end http request-----------\n")
             Log.d(TAG, "  ")
 
+            connection.disconnect()
             return inputLine
         }
 
