@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSpinners() {
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.code_of_airporst))
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airporst))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerEnd = findViewById(R.id.end_airport) as Spinner
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     9 -> destination = "AEP"
                     10 -> destination = "HND"
                     11 -> destination = "BHY"
-                    12 -> destination = "DWC"
+                    12 -> destination = "KBP"
                     13 -> destination = "CDG"
                     14 -> destination = "AMS"
                 }
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                     9 -> origin = "AEP"
                     10 -> origin = "HND"
                     11 -> origin = "BHY"
-                    12 -> origin = "DWC"
+                    12 -> origin = "KBP"
                     13 -> origin = "CDG"
                     14 -> origin = "AMS"
                 }
