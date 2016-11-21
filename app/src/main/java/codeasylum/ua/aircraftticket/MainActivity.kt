@@ -41,8 +41,11 @@ class MainActivity : AppCompatActivity() {
         animation = btn!!.background as AnimationDrawable
 
         btn!!.setOnClickListener {
-            if(origin == "1" || destination == "1" || origin == destination)
+            if(origin == "1" || destination == "1" || origin == destination){
+                listOfTickets!!.visibility = View.INVISIBLE
                 help_text_view?.text = getString(R.string.need_select_points)
+                help_text_view!!.visibility = View.VISIBLE
+            }
             else{
             animation!!.start()
             val getDataTask = GetDataTask()
@@ -125,6 +128,10 @@ class MainActivity : AppCompatActivity() {
 
         var requestToServer = Request(origin, destination)
 
+        override fun onPreExecute() {
+            listOfTickets!!.visibility = View.INVISIBLE
+        }
+
         override fun doInBackground(vararg voids: Void): JSONObject? {
             try {
                 return JSONObject(Request.doPost(requestToServer.createJson().toString()))
@@ -140,11 +147,13 @@ class MainActivity : AppCompatActivity() {
             try {
                 customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
             } catch (e: JSONException) {
+                listOfTickets!!.visibility = View.INVISIBLE
                 help_text_view?.visibility = View.VISIBLE
                 help_text_view?.text = getString(R.string.no_aircraft)
             }
 
             listOfTickets?.adapter = customAdapter
+            listOfTickets!!.visibility = View.VISIBLE
             animation?.stop()
             btn?.setBackgroundResource(R.drawable.anim_btn)
 
