@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
 
         btn!!.setOnClickListener {
             if(origin == "1" || destination == "1" || origin == destination){
-                listOfTickets!!.visibility = View.INVISIBLE
+                viewsVisibility(listOfTickets as View,View.INVISIBLE)
+                viewsVisibility(help_text_view as View,View.VISIBLE)
                 help_text_view?.text = getString(R.string.need_select_points)
-                help_text_view!!.visibility = View.VISIBLE
             }
             else{
             animation!!.start()
@@ -55,13 +55,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun viewsVisibility(view: View, code: Int){
+        view.visibility = code
+    }
+
     private fun initSpinners() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airporst))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerEnd = findViewById(R.id.end_airport) as Spinner
         spinnerEnd!!.adapter = adapter
-        spinnerEnd!!.setSelection(1)
+        spinnerEnd!!.setSelection(0)
         spinnerEnd!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 when (i) {
@@ -88,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         spinnerStart = findViewById(R.id.start_airport) as Spinner
-        spinnerStart!!.setSelection(1)
+        spinnerStart!!.setSelection(0)
         spinnerStart!!.adapter = adapter
         spinnerStart!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
@@ -129,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         var requestToServer = Request(origin, destination)
 
         override fun onPreExecute() {
-            listOfTickets!!.visibility = View.INVISIBLE
+            viewsVisibility(listOfTickets as View,View.INVISIBLE)
         }
 
         override fun doInBackground(vararg voids: Void): JSONObject? {
@@ -147,13 +151,13 @@ class MainActivity : AppCompatActivity() {
             try {
                 customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
             } catch (e: JSONException) {
-                listOfTickets!!.visibility = View.INVISIBLE
-                help_text_view?.visibility = View.VISIBLE
+                viewsVisibility(listOfTickets as View,View.INVISIBLE)
+                viewsVisibility(help_text_view as View, View.VISIBLE)
                 help_text_view?.text = getString(R.string.no_aircraft)
             }
 
             listOfTickets?.adapter = customAdapter
-            listOfTickets!!.visibility = View.VISIBLE
+            viewsVisibility(listOfTickets as View, View.VISIBLE)
             animation?.stop()
             btn?.setBackgroundResource(R.drawable.anim_btn)
 
