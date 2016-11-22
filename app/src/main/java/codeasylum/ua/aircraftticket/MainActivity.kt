@@ -47,9 +47,10 @@ class MainActivity : AppCompatActivity() {
                 help_text_view?.text = getString(R.string.need_select_points)
             }
             else{
-            animation!!.start()
-            val getDataTask = GetDataTask()
-            getDataTask.execute()}
+                animation!!.start()
+                val getDataTask = GetDataTask()
+                getDataTask.execute()
+            }
         }
 
 
@@ -145,19 +146,20 @@ class MainActivity : AppCompatActivity() {
             return null
         }
 
-        override fun onPostExecute(jsonObject: JSONObject) {
+        override fun onPostExecute(jsonObject: JSONObject?) {
             help_text_view?.visibility = View.INVISIBLE
-            jsonParser = JSONParser(jsonObject)
             try {
+                jsonParser = JSONParser(jsonObject)
                 customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
-            } catch (e: JSONException) {
+                listOfTickets?.adapter = customAdapter
+                viewsVisibility(listOfTickets as View, View.VISIBLE)
+
+            }catch (e :Exception){
                 viewsVisibility(listOfTickets as View,View.INVISIBLE)
                 viewsVisibility(help_text_view as View, View.VISIBLE)
-                help_text_view?.text = getString(R.string.no_aircraft)
+                help_text_view!!.text = getString(R.string.noTickets)
             }
 
-            listOfTickets?.adapter = customAdapter
-            viewsVisibility(listOfTickets as View, View.VISIBLE)
             animation?.stop()
             btn?.setBackgroundResource(R.drawable.anim_btn)
 

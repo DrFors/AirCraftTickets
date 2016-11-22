@@ -12,13 +12,13 @@ import java.util.ArrayList
  * Created by Андрей on 20.11.2016.
  */
 
-internal class JSONParser(private val responceJSONObject: JSONObject) {
+internal class JSONParser(private val responceJSONObject: JSONObject?) {
 
     val ticketArayList: ArrayList<Ticket>
         @Throws(JSONException::class)
         get() {
             val tikets = ArrayList<Ticket>()
-            val trips = responceJSONObject.getJSONObject("trips")
+            val trips = responceJSONObject!!.getJSONObject("trips")
             val tripOptions = trips.getJSONArray("tripOption")
             for (i in 0..tripOptions.length() - 1) {
                 val objectInTripOptions = tripOptions.getJSONObject(i)

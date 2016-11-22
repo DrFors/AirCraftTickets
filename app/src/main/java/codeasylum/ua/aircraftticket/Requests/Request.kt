@@ -99,9 +99,6 @@ internal class Request(private val origin: String, private val destination: Stri
             outputStream.flush()
             outputStream.close() */
 
-
-
-
             val responseCode = connection.responseCode
             val TAG = "TTTTTTTTTTTT"
             Log.d(TAG, "\n-----------Send http request-----------")
