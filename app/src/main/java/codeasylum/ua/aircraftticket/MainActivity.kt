@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun viewsVisibility(view: View, code: Int){
+    private fun viewsVisibility(view: View, code: Int){ //установка видимости элементов
         view.visibility = code
     }
 
