@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         btn!!.setBackgroundResource(R.drawable.anim_btn)
         animation = btn!!.background as AnimationDrawable
 
+
         btn!!.setOnClickListener {
             if(origin == "1" || destination == "1" || origin == destination){
                 viewsVisibility(listOfTickets as View,View.INVISIBLE)
@@ -46,9 +47,10 @@ class MainActivity : AppCompatActivity() {
                 help_text_view?.text = getString(R.string.need_select_points)
             }
             else{
-                animation!!.start()
                 val getDataTask = GetDataTask()
                 getDataTask.execute()
+                animation!!.start()
+                btn!!.isClickable = false
             }
         }
 
@@ -158,10 +160,8 @@ class MainActivity : AppCompatActivity() {
                 viewsVisibility(help_text_view as View, View.VISIBLE)
                 help_text_view!!.text = getString(R.string.noTickets)
             }
-
-            animation?.stop()
-            btn?.setBackgroundResource(R.drawable.anim_btn)
-
+            animation!!.stop()
+            btn!!.isClickable = true
 
         }
 
