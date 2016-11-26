@@ -14,12 +14,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Spinner
+        style="@style/spinner_style"
         android:id="@+id/start_airport"
         android:layout_weight="1"
         android:elevation="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <Spinner
+        style="@style/spinner_style"
         android:id="@+id/end_airport"
         android:layout_weight="1"
         android:elevation="2dp"

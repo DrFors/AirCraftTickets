@@ -30,11 +30,11 @@ internal class JSONParser(private val responceJSONObject: JSONObject?) {
                 var objectInSegment = segment.getJSONObject(0)
                 var leg = objectInSegment.getJSONArray("leg")
                 var objecInLeg = leg.getJSONObject(0)
-                val startTime = objecInLeg.getString("departureTime")
+                val startTime = parseDate(objecInLeg.getString("departureTime"))
                 objectInSegment = segment.getJSONObject(segment.length() - 1)
                 leg = objectInSegment.getJSONArray("leg")
                 objecInLeg = leg.getJSONObject(0)
-                val endTime = objecInLeg.getString("arrivalTime")
+                val endTime = parseDate(objecInLeg.getString("arrivalTime"))
                 Log.d("!!!!!!!!!!!!!!!!!!!!!!!", "VALUES: $saleTotal $countOfTransfer $startTime $endTime")
                 tikets.add(Ticket(startTime, endTime, saleTotal, countOfTransfer))
             }
@@ -42,4 +42,18 @@ internal class JSONParser(private val responceJSONObject: JSONObject?) {
 
             return tikets
         }
+
+    fun parseDate(dateStr : String) : String{
+        var buffString = ""
+        val strings = dateStr.split("T")
+        for(item in strings){
+            buffString+= item+ " "
+        }
+
+        return buffString
+
+
+    }
+
+
 }
