@@ -62,30 +62,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSpinners() {
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airporst))
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        var adapter_end = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airports_end))
+        adapter_end.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerEnd = findViewById(R.id.end_airport) as Spinner
-        spinnerEnd!!.adapter = adapter
+        spinnerEnd!!.adapter = adapter_end
         spinnerEnd!!.setSelection(0)
         spinnerEnd!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 when (i) {
-                    0 -> destination = "YUL"
-                    1 -> destination = "YMX"
-                    2 -> destination = "YOW"
-                    3 -> destination = "MEX"
-                    4 -> destination = "MDW"
-                    5 -> destination = "MIA"
-                    6 -> destination = "JFK"
-                    7 -> destination = "DCA"
-                    8 -> destination = "EZE"
-                    9 -> destination = "AEP"
-                    10 -> destination = "HND"
-                    11 -> destination = "BHY"
-                    12 -> destination = "KBP"
-                    13 -> destination = "CDG"
-                    14 -> destination = "AMS"
+                    0 -> destination = "1"
+                    1 -> destination = "YUL"
+                    2 -> destination = "YMX"
+                    3 -> destination = "YOW"
+                    4 -> destination = "MEX"
+                    5 -> destination = "MDW"
+                    6 -> destination = "MIA"
+                    7 -> destination = "JFK"
+                    8 -> destination = "DCA"
+                    9 -> destination = "EZE"
+                    10 -> destination = "AEP"
+                    11 -> destination = "HND"
+                    12 -> destination = "BHY"
+                    13 -> destination = "KBP"
+                    14 -> destination = "CDG"
+                    15 -> destination = "AMS"
                 }
             }
 
@@ -93,27 +94,32 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
+        var adapter_start = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airports_start))
+        adapter_start.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         spinnerStart = findViewById(R.id.start_airport) as Spinner
         spinnerStart!!.setSelection(0)
-        spinnerStart!!.adapter = adapter
+        spinnerStart!!.adapter= adapter_start
         spinnerStart!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 when (i) {
-                    0 -> origin = "YUL"
-                    1 -> origin = "YMX"
-                    2 -> origin = "YOW"
-                    3 -> origin = "MEX"
-                    4 -> origin = "MDW"
-                    5 -> origin = "MIA"
-                    6 -> origin = "JFK"
-                    7 -> origin = "DCA"
-                    8 -> origin = "EZE"
-                    9 -> origin = "AEP"
-                    10 -> origin = "HND"
-                    11 -> origin = "BHY"
-                    12 -> origin = "KBP"
-                    13 -> origin = "CDG"
-                    14 -> origin = "AMS"
+                    0 -> origin = "1"
+                    1 -> origin = "YUL"
+                    2 -> origin = "YMX"
+                    3 -> origin = "YOW"
+                    4 -> origin = "MEX"
+                    5 -> origin = "MDW"
+                    6 -> origin = "MIA"
+                    7 -> origin = "JFK"
+                    8 -> origin = "DCA"
+                    9 -> origin = "EZE"
+                    10 -> origin = "AEP"
+                    11 -> origin = "HND"
+                    12 -> origin = "BHY"
+                    13 -> origin = "KBP"
+                    14 -> origin = "CDG"
+                    15 -> origin = "AMS"
                 }
             }
 
