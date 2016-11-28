@@ -28,28 +28,6 @@ internal class Request(private val origin: String, private val destination: Stri
 
     }
 
-    /* private String createParams(){
-        return " {\n" +
-                "  \"request\": {\n" +
-                "    \"slice\": [\n" +
-                "      {\n" +
-                "        \"origin\": \"NYC\",\n" +
-                "        \"destination\": \"BOS\",\n" +
-                "        \"date\": \"2016-11-25\"\n" +
-                "      }\n" +
-                "    ],\n" +
-                "    \"passengers\": {\n" +
-                "      \"adultCount\": 1,\n" +
-                "      \"infantInLapCount\": 0,\n" +
-                "      \"infantInSeatCount\": 0,\n" +
-                "      \"childCount\": 0,\n" +
-                "      \"seniorCount\": 0\n" +
-                "    },\n" +
-                "    \"solutions\": 20,\n" +
-                "    \"refundable\": false\n" +
-                "  }\n" +
-                "}";
-    } */
 
 
     @Throws(JSONException::class)

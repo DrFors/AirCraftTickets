@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
-        android:contentDescription=""
-        android:clickable="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_gravity="end|bottom"
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/animation_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:translationZ="20dp"
-        android:background="@drawable/anim_btn"/>
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/anim_btn"
+        app:backgroundTint="@color/colorPrimary"
+        app:rippleColor="#FFF" />
 
 </merge>

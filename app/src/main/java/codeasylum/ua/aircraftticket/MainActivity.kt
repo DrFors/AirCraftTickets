@@ -3,6 +3,7 @@ package codeasylum.ua.aircraftticket
 import android.graphics.drawable.AnimationDrawable
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.*
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     internal var destination = "1"
     internal var customAdapter: CustomAdapter? = null
     internal var jsonParser: JSONParser? = null
-    internal var btn: ImageButton? = null
+    internal var btn: FloatingActionButton? = null
     internal var help_text_view: TextView? = null
 
 
@@ -35,9 +36,9 @@ class MainActivity : AppCompatActivity() {
         initListView()
 
         help_text_view = findViewById(R.id.help_text_view) as TextView?
-        btn = findViewById(R.id.animation_btn) as ImageButton
-        btn!!.setBackgroundResource(R.drawable.anim_btn)
-        animation = btn!!.background as AnimationDrawable
+        btn = findViewById(R.id.animation_btn) as FloatingActionButton
+        btn!!.setImageResource(R.drawable.anim_btn)
+        animation = btn!!.drawable as AnimationDrawable
 
 
         btn!!.setOnClickListener {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 val getDataTask = GetDataTask()
                 getDataTask.execute()
+                animation!!.isOneShot = false
                 animation!!.start()
                 btn!!.isClickable = false
             }
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSpinners() {
-        var adapter_end = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airports_end))
+        val adapter_end = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airports_end))
         adapter_end.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerEnd = findViewById(R.id.end_airport) as Spinner
@@ -95,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var adapter_start = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airports_start))
+        val adapter_start = ArrayAdapter(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.name_of_airports_start))
         adapter_start.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerStart = findViewById(R.id.start_airport) as Spinner
@@ -166,9 +168,17 @@ class MainActivity : AppCompatActivity() {
                 viewsVisibility(help_text_view as View, View.VISIBLE)
                 help_text_view!!.text = getString(R.string.noTickets)
             }
-            animation!!.stop()
+
+            animationControl()
             btn!!.isClickable = true
 
+        }
+
+        fun animationControl(){
+            animation!!.stop()
+            animation!!.isOneShot = true
+            animation!!.start()
+            animation!!.stop()
         }
 
 

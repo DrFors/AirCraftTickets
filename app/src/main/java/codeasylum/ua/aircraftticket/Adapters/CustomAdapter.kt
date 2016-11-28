@@ -27,21 +27,21 @@ class CustomAdapter(context: Context, private val tickets: ArrayList<Ticket>) : 
 
 
     override fun getView(i: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+        var rootView = convertView
 
         val viewHolder: ViewHolder
 
-        if (convertView == null) {
+        if (rootView == null) {
             viewHolder = ViewHolder()
             val inflater = LayoutInflater.from(context)
-            convertView = inflater.inflate(R.layout.custom_list_view, parent, false)
-            viewHolder.departureDate = convertView!!.findViewById(R.id.start_date) as TextView
-            viewHolder.arrivalDate = convertView.findViewById(R.id.end_date) as TextView
-            viewHolder.price = convertView.findViewById(R.id.price) as TextView
-            viewHolder.countOfTransfers = convertView.findViewById(R.id.cout_of_transgers) as TextView
-            convertView.tag = viewHolder
+            rootView = inflater.inflate(R.layout.custom_list_view, parent, false)
+            viewHolder.departureDate = rootView!!.findViewById(R.id.start_date) as TextView
+            viewHolder.arrivalDate = rootView.findViewById(R.id.end_date) as TextView
+            viewHolder.price = rootView.findViewById(R.id.price) as TextView
+            viewHolder.countOfTransfers = rootView.findViewById(R.id.cout_of_transgers) as TextView
+            rootView.tag = viewHolder
         } else {
-            viewHolder = convertView.tag as ViewHolder
+            viewHolder = rootView.tag as ViewHolder
         }
 
 
@@ -52,6 +52,6 @@ class CustomAdapter(context: Context, private val tickets: ArrayList<Ticket>) : 
 
 
 
-        return convertView
+        return rootView
     }
 }
