@@ -183,4 +183,55 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
+
+
+
+  /*  internal inner class GetDataTask : AsyncTask<Void, Void, JSONObject>() {
+
+        var requestToServer = Request(origin, destination)
+
+        override fun onPreExecute() {
+            viewsVisibility(listOfTickets as View,View.INVISIBLE)
+        }
+
+        override fun doInBackground(vararg voids: Void): JSONObject? {
+            try {
+                return JSONObject(Request.doPost(requestToServer.createJson().toString()))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return null
+        }
+
+        override fun onPostExecute(jsonObject: JSONObject?) {
+            help_text_view?.visibility = View.INVISIBLE
+            try {
+                jsonParser = JSONParser(jsonObject)
+                customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
+                listOfTickets?.adapter = customAdapter
+                viewsVisibility(listOfTickets as View, View.VISIBLE)
+
+            }catch (e :Exception){
+                viewsVisibility(listOfTickets as View,View.INVISIBLE)
+                viewsVisibility(help_text_view as View, View.VISIBLE)
+                help_text_view!!.text = getString(R.string.noTickets)
+            }
+
+            animationControl()
+            btn!!.isClickable = true
+
+        }
+
+        fun animationControl(){
+            animation!!.stop()
+            animation!!.isOneShot = true
+            animation!!.start()
+            animation!!.stop()
+        }
+
+
+    }
+    */
 }

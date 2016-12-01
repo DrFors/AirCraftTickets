@@ -1,10 +1,23 @@
 package codeasylum.ua.aircraftticket.Requests
 
 import android.util.Log
+import codeasylum.ua.aircraftticket.Ticket
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.POST
+import retrofit2.http.Part
 
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
@@ -14,6 +27,8 @@ import java.util.Calendar
 /**
  * Created by Андрей on 20.11.2016.
  */
+
+
 
 internal class Request(private val origin: String, private val destination: String) {
     private val date: String
@@ -30,8 +45,28 @@ internal class Request(private val origin: String, private val destination: Stri
 
 
 
+    companion object {
+
+        private val key = "search?key=AIzaSyA-EJ2toj9z8tv8HYbNRNqWPvB27akvFss"
+        //private static final String key = "?key=AIzaSyCdKk4nUqMm8d1ZVwzwWqOfAf_fKkZAY28";
+        private val BASE_URL = "https://www.googleapis.com/qpxExpress/v1/trips/"
+        fun doPost(json : String): String {
+            var retrofit = Retrofit.Builder().baseUrl(BASE_URL).build()
+            var api = retrofit.create(Api::class.java)
+            var reqBody = RequestBody.create(MediaType.parse("application/json"), json.toByteArray())
+            var call: Call<ResponseBody> = api.loadTicket(reqBody)
+            val result = call.execute()
+
+
+            return result.body().string()
+
+        }
+    }
+
+
+
     @Throws(JSONException::class)
-    fun createJson(): JSONObject {
+    internal fun createJson(): JSONObject {
         val root = JSONObject()
         val request = JSONObject()
         val pasanger = JSONObject()
@@ -54,7 +89,7 @@ internal class Request(private val origin: String, private val destination: Stri
 
         return root
     }
-
+/*
     companion object {
 
         private val key = "?key=AIzaSyA-EJ2toj9z8tv8HYbNRNqWPvB27akvFss"
@@ -99,12 +134,18 @@ internal class Request(private val origin: String, private val destination: Stri
         }
 
 
+
+
         @Throws(MalformedURLException::class)
         private fun createURL(): URL {
             val okURL = BASE_URL + key
             return URL(okURL)
         }
     }
+   */
 
+    interface Api{
+        @POST("search?key=AIzaSyA-EJ2toj9z8tv8HYbNRNqWPvB27akvFss")
+        fun  loadTicket(@Body requestBody: RequestBody) : Call<ResponseBody> }
 
 }
