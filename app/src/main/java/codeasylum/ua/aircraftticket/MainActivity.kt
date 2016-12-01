@@ -12,6 +12,10 @@ import org.json.JSONObject
 
 import codeasylum.ua.aircraftticket.Adapters.CustomAdapter
 import codeasylum.ua.aircraftticket.Requests.Request
+import rx.Observable
+import rx.Scheduler
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,12 +46,11 @@ class MainActivity : AppCompatActivity() {
 
 
         btn!!.setOnClickListener {
-            if(origin == "1" || destination == "1" || origin == destination){
-                viewsVisibility(listOfTickets as View,View.INVISIBLE)
-                viewsVisibility(help_text_view as View,View.VISIBLE)
+            if (origin == "1" || destination == "1" || origin == destination) {
+                viewsVisibility(listOfTickets as View, View.INVISIBLE)
+                viewsVisibility(help_text_view as View, View.VISIBLE)
                 help_text_view?.text = getString(R.string.need_select_points)
-            }
-            else{
+            } else {
                 val getDataTask = GetDataTask()
                 getDataTask.execute()
                 animation!!.isOneShot = false
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun viewsVisibility(view: View, code: Int){ //установка видимости элементов
+    private fun viewsVisibility(view: View, code: Int) { //установка видимости элементов
         view.visibility = code
     }
 
@@ -102,7 +105,7 @@ class MainActivity : AppCompatActivity() {
 
         spinnerStart = findViewById(R.id.start_airport) as Spinner
         spinnerStart!!.setSelection(0)
-        spinnerStart!!.adapter= adapter_start
+        spinnerStart!!.adapter = adapter_start
         spinnerStart!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 when (i) {
@@ -143,12 +146,12 @@ class MainActivity : AppCompatActivity() {
         var requestToServer = Request(origin, destination)
 
         override fun onPreExecute() {
-            viewsVisibility(listOfTickets as View,View.INVISIBLE)
+            viewsVisibility(listOfTickets as View, View.INVISIBLE)
         }
 
         override fun doInBackground(vararg voids: Void): JSONObject? {
             try {
-                return JSONObject(Request.doPost(requestToServer.createJson().toString()))
+                return Request.doPost(requestToServer.createJson().toString())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -163,58 +166,8 @@ class MainActivity : AppCompatActivity() {
                 listOfTickets?.adapter = customAdapter
                 viewsVisibility(listOfTickets as View, View.VISIBLE)
 
-            }catch (e :Exception){
-                viewsVisibility(listOfTickets as View,View.INVISIBLE)
-                viewsVisibility(help_text_view as View, View.VISIBLE)
-                help_text_view!!.text = getString(R.string.noTickets)
-            }
-
-            animationControl()
-            btn!!.isClickable = true
-
-        }
-
-        fun animationControl(){
-            animation!!.stop()
-            animation!!.isOneShot = true
-            animation!!.start()
-            animation!!.stop()
-        }
-
-
-    }
-
-
-
-
-
-  /*  internal inner class GetDataTask : AsyncTask<Void, Void, JSONObject>() {
-
-        var requestToServer = Request(origin, destination)
-
-        override fun onPreExecute() {
-            viewsVisibility(listOfTickets as View,View.INVISIBLE)
-        }
-
-        override fun doInBackground(vararg voids: Void): JSONObject? {
-            try {
-                return JSONObject(Request.doPost(requestToServer.createJson().toString()))
             } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return null
-        }
-
-        override fun onPostExecute(jsonObject: JSONObject?) {
-            help_text_view?.visibility = View.INVISIBLE
-            try {
-                jsonParser = JSONParser(jsonObject)
-                customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
-                listOfTickets?.adapter = customAdapter
-                viewsVisibility(listOfTickets as View, View.VISIBLE)
-
-            }catch (e :Exception){
-                viewsVisibility(listOfTickets as View,View.INVISIBLE)
+                viewsVisibility(listOfTickets as View, View.INVISIBLE)
                 viewsVisibility(help_text_view as View, View.VISIBLE)
                 help_text_view!!.text = getString(R.string.noTickets)
             }
@@ -224,7 +177,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        fun animationControl(){
+        fun animationControl() {
             animation!!.stop()
             animation!!.isOneShot = true
             animation!!.start()
@@ -233,5 +186,5 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    */
 }
+

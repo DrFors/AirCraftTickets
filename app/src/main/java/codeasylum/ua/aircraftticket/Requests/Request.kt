@@ -1,9 +1,5 @@
 package codeasylum.ua.aircraftticket.Requests
 
-import android.util.Log
-import codeasylum.ua.aircraftticket.Ticket
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -12,17 +8,17 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.Callback
+import retrofit2.CallAdapter
+import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.http.Part
-
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.URL
-import java.util.Calendar
+import rx.Observable
+import rx.Subscriber
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import java.util.*
 
 /**
  * Created by Андрей on 20.11.2016.
@@ -50,24 +46,47 @@ internal class Request(private val origin: String, private val destination: Stri
         private val key = "search?key=AIzaSyA-EJ2toj9z8tv8HYbNRNqWPvB27akvFss"
         //private static final String key = "?key=AIzaSyCdKk4nUqMm8d1ZVwzwWqOfAf_fKkZAY28";
         private val BASE_URL = "https://www.googleapis.com/qpxExpress/v1/trips/"
-        fun doPost(json : String): String {
+        fun doPost(json : String): JSONObject {
+
+
             var retrofit = Retrofit.Builder().baseUrl(BASE_URL).build()
             var api = retrofit.create(Api::class.java)
             var reqBody = RequestBody.create(MediaType.parse("application/json"), json.toByteArray())
             var call: Call<ResponseBody> = api.loadTicket(reqBody)
-            val result = call.execute()
+            val result = call.execute().body().string()
 
-
-            return result.body().string()
+            return JSONObject(result)
 
         }
     }
 
-
-
     @Throws(JSONException::class)
+    fun createJson(): JSONObject {
+        var root = JSONObject()
+        Observable.just(JSONObject())
+                .map { buff ->
+            buff.put("origin", origin)
+                    .put("destination", destination)
+                    .put("date", date) }
+                .map { buff -> JSONArray().put(buff) }
+                .map { slice ->
+                    JSONObject().put("passengers", JSONObject().put("adultCount", 1))
+                            .put("slice", slice)
+                            .put("refundable", false)
+                            .put("solutions", 20)
+                }
+                .map { request -> JSONObject().put("request", request) }
+                .subscribe { rt -> root = rt }
+        return root
+
+    }
+
+
+
+  /*  @Throws(JSONException::class)
     internal fun createJson(): JSONObject {
         val root = JSONObject()
+
         val request = JSONObject()
         val pasanger = JSONObject()
         //addpasanger
@@ -89,6 +108,7 @@ internal class Request(private val origin: String, private val destination: Stri
 
         return root
     }
+    */
 /*
     companion object {
 
@@ -149,3 +169,5 @@ internal class Request(private val origin: String, private val destination: Stri
         fun  loadTicket(@Body requestBody: RequestBody) : Call<ResponseBody> }
 
 }
+
+
