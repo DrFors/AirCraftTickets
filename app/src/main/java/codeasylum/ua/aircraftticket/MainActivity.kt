@@ -1,18 +1,19 @@
 package codeasylum.ua.aircraftticket
 
+import android.content.Context
 import android.graphics.drawable.AnimationDrawable
+import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.*
-
-import org.json.JSONObject
-
 import codeasylum.ua.aircraftticket.Adapters.CustomAdapter
 import codeasylum.ua.aircraftticket.Requests.Request
+import org.json.JSONObject
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     internal var destination = "1"
     internal var customAdapter: CustomAdapter? = null
     @Inject
-    lateinit var requestToServer : Request
+    lateinit var requestToServer: Request
     @Inject
     lateinit var jsonParser: JSONParser
     internal var btn: FloatingActionButton? = null
@@ -47,12 +48,12 @@ class MainActivity : AppCompatActivity() {
 
 
         btn!!.setOnClickListener {
-            if (origin == "1" || destination == "1" || origin == destination) {
+            if (origin == "1" || destination == "1" || origin == destination || !isNetworkConnected()) {
                 viewsVisibility(listOfTickets as View, View.INVISIBLE)
                 viewsVisibility(help_text_view as View, View.VISIBLE)
                 help_text_view?.text = getString(R.string.need_select_points)
             } else {
-                requestToServer.setOriginAndDestinations(origin,destination)
+                requestToServer.setOriginAndDestinations(origin, destination)
                 val getDataTask = GetDataTask()
                 getDataTask.execute()
                 animation!!.isOneShot = false
@@ -186,6 +187,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        return cm.activeNetworkInfo != null
     }
 }
 

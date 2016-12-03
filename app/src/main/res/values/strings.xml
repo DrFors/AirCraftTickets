@@ -4,6 +4,6 @@
     <string name="URL">https://www.googleapis.com/qpxExpress/v1/trips/search</string>
     <string name="Help_message">Please, choose begin and end trip from drop down menu</string>
     <string name="no_aircraft">No flights available</string>
-    <string name="need_select_points">you did not choose the starting or ending point of travel</string>
+    <string name="need_select_points">you did not choose the starting or ending point of travel or enable your internet</string>
     <string name="noTickets">No tickets on this date</string>
 </resources>

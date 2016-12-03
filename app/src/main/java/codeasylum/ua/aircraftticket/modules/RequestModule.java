@@ -11,7 +11,9 @@ import dagger.Provides;
 @Module
 public class RequestModule {
     @Provides
-    public Request provideRequest(){
+    Request provideRequest() {
         return new Request();
     }
+
+
 }

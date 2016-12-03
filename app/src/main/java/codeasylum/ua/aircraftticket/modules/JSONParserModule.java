@@ -1,7 +1,5 @@
 package codeasylum.ua.aircraftticket.modules;
 
-import org.json.JSONObject;
-
 import codeasylum.ua.aircraftticket.JSONParser;
 import dagger.Module;
 import dagger.Provides;
@@ -14,7 +12,7 @@ import dagger.Provides;
 public class JSONParserModule {
 
     @Provides
-    public JSONParser provideJsonParser(){
+    JSONParser provideJsonParser() {
         return new JSONParser();
     }
 }

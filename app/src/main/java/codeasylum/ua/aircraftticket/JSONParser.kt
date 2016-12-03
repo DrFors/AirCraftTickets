@@ -4,6 +4,7 @@ import android.util.Log
 
 import org.json.JSONException
 import org.json.JSONObject
+import rx.Observable
 
 import java.util.ArrayList
 
@@ -14,7 +15,7 @@ import java.util.ArrayList
 class JSONParser() {
 
     private var responceJSONObject: JSONObject? = null
-    internal fun setJObject(job : JSONObject){
+    internal fun setJObject(job: JSONObject) {
         responceJSONObject = job
     }
 
@@ -47,14 +48,14 @@ class JSONParser() {
             return tikets
         }
 
-    fun parseDate(dateStr : String) : String{
-        var buffString = ""
-        val strings = dateStr.split("T")
-        for(item in strings){
-            buffString+= item+ " "
-        }
+    fun parseDate(dateStr: String): String {
+        var item = ""
+        Observable.just(dateStr)
+                .map { date -> date.split("T") }
+                .flatMap { dates -> Observable.from(dates) }
+                .subscribe { date -> item += date + " " }
 
-        return buffString
+        return item
 
 
     }

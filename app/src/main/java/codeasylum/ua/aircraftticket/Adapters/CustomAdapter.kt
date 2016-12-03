@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-
-import java.util.ArrayList
-
 import codeasylum.ua.aircraftticket.R
 import codeasylum.ua.aircraftticket.Ticket
+import java.util.*
 
 /**
  * Created by Андрей on 20.11.2016.
