@@ -25,9 +25,15 @@ import java.util.*
  */
 
 
-
-internal class Request(private val origin: String, private val destination: String) {
+class Request() {
+    private var origin: String = ""
+    private var destination: String =""
     private val date: String
+
+    internal fun setOriginAndDestinations(a : String, b : String){
+        origin = a
+        destination = b
+    }
 
     init {
         val builder = StringBuilder()

@@ -12,10 +12,7 @@ import org.json.JSONObject
 
 import codeasylum.ua.aircraftticket.Adapters.CustomAdapter
 import codeasylum.ua.aircraftticket.Requests.Request
-import rx.Observable
-import rx.Scheduler
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +24,10 @@ class MainActivity : AppCompatActivity() {
     internal var origin = "1"
     internal var destination = "1"
     internal var customAdapter: CustomAdapter? = null
-    internal var jsonParser: JSONParser? = null
+    @Inject
+    lateinit var requestToServer : Request
+    @Inject
+    lateinit var jsonParser: JSONParser
     internal var btn: FloatingActionButton? = null
     internal var help_text_view: TextView? = null
 
@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        App.getComponent().mainActivityInject(this)
 
         initSpinners()
         initListView()
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 viewsVisibility(help_text_view as View, View.VISIBLE)
                 help_text_view?.text = getString(R.string.need_select_points)
             } else {
+                requestToServer.setOriginAndDestinations(origin,destination)
                 val getDataTask = GetDataTask()
                 getDataTask.execute()
                 animation!!.isOneShot = false
@@ -143,7 +145,6 @@ class MainActivity : AppCompatActivity() {
 
     internal inner class GetDataTask : AsyncTask<Void, Void, JSONObject>() {
 
-        var requestToServer = Request(origin, destination)
 
         override fun onPreExecute() {
             viewsVisibility(listOfTickets as View, View.INVISIBLE)
@@ -151,18 +152,18 @@ class MainActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg voids: Void): JSONObject? {
             try {
-                return Request.doPost(requestToServer.createJson().toString())
+                return Request.doPost(requestToServer!!.createJson().toString())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
             return null
         }
 
-        override fun onPostExecute(jsonObject: JSONObject?) {
+        override fun onPostExecute(jsonObject: JSONObject) {
             help_text_view?.visibility = View.INVISIBLE
             try {
-                jsonParser = JSONParser(jsonObject)
-                customAdapter = CustomAdapter(applicationContext, jsonParser!!.ticketArayList)
+                jsonParser.setJObject(jsonObject)
+                customAdapter = CustomAdapter(applicationContext, jsonParser.ticketArayList)
                 listOfTickets?.adapter = customAdapter
                 viewsVisibility(listOfTickets as View, View.VISIBLE)
 

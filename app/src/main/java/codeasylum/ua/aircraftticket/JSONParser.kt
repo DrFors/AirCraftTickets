@@ -11,7 +11,12 @@ import java.util.ArrayList
  * Created by Андрей on 20.11.2016.
  */
 
-internal class JSONParser(private val responceJSONObject: JSONObject?) {
+class JSONParser() {
+
+    private var responceJSONObject: JSONObject? = null
+    internal fun setJObject(job : JSONObject){
+        responceJSONObject = job
+    }
 
     val ticketArayList: ArrayList<Ticket>
         @Throws(JSONException::class)
